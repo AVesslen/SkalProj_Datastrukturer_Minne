@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -98,7 +99,12 @@ namespace SkalProj_Datastrukturer_Minne
 
             //switch(nav){...}
 
+            // Count is the number of elements that are present in the List
+            // Capacity is the number of elements that the List can store before resizing is required
+
+
             List<string> theList = new List<string>();
+            Console.WriteLine($"Capacity default: {theList.Capacity}");
             bool isRunning = true;
             while (isRunning)
             {
@@ -114,21 +120,48 @@ namespace SkalProj_Datastrukturer_Minne
                 {
                     case '+':
                         theList.Add(value);
+
+                        Console.WriteLine($"Items in the list: ");
+                        foreach (var item in theList)
+                        {
+                            Console.WriteLine(item);                               
+                        }
+                        Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}");
+
                         break;
                     case '-':
                         theList.Remove(value);
+                        Console.WriteLine($"Items in the list: ");
+                        foreach (var item in theList)
+                        {
+                            Console.WriteLine(item);                             
+                        }
+                        Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}"); 
                         break;
+
                     case '0':
                         isRunning = false;
                         break;
+
                     default:
                         Console.WriteLine("Please, only enter \"+\" or \"-\" in front of the string.");
                         break;
-
-
                 }
+
+               
             }
+
+            // Fråga 2. Listans kapacitet ökar först när den underliggande arrayen är full (count=capacity) och vi vill lägga till ett nytt element.
+            // Fråga 3. Default kapacitet när första elementet läggs till är 4. Kapaciteten ökar sedan exponentiellt, genom att dubbleras när den
+            //          underliggande arrayen är full.
+            // Fråga 4. Listans kapacitet ökar inte i samma takt som element läggs till pga att den lagrar värdena i en array. En array har en fix storlek,
+            //          så att lägga till nya element är kostsamt. Det kräver att en ny, längre array skapas och de tidigare elementen kopieras över till
+            //          den nya. 
+            // Fråga 5. Kapaciteten minskar inte när element tas bort ur listan.
+            // Fråga 6. När man vet på förhand hur många element man vill lägga till är det fördelaktigt att använda en egendefinierad array i stället för lista. 
+
         }
+
 
         /// <summary>
         /// Examines the datastructure Queue
