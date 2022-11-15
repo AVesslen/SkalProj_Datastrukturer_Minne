@@ -81,8 +81,8 @@ namespace SkalProj_Datastrukturer_Minne
         /// Examines the datastructure List
         /// </summary>
         static void ExamineList()
-        {      
-            List<string> theList = new List<string>();            
+        {
+            List<string> theList = new List<string>();
             bool isRunning = true;
             while (isRunning)
             {
@@ -102,7 +102,7 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.WriteLine($"Items in the list: ");
                         foreach (var item in theList)
                         {
-                            Console.WriteLine(item);                               
+                            Console.WriteLine(item);
                         }
                         Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}");
 
@@ -112,9 +112,9 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.WriteLine($"Items in the list: ");
                         foreach (var item in theList)
                         {
-                            Console.WriteLine(item);                             
+                            Console.WriteLine(item);
                         }
-                        Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}"); 
+                        Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}");
                         break;
 
                     case '0':
@@ -149,13 +149,12 @@ namespace SkalProj_Datastrukturer_Minne
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
 
-            List<string> theList = new List<string>();
-            Queue<string> theQueue= new Queue<string>();    
+            Queue<string> theQueue = new Queue<string>();
             bool isRunning = true;
             while (isRunning)
             {
                 Console.WriteLine(" Enter a string with a \"+\" in front, if you want to enqueue (add item to the queue)."
-                     + "\n Enter a \"-\", it you want to eequeue (remove the first item from the queue)."
+                     + "\n Enter a \"-\", it you want to enqueue (remove the first item from the queue)."
                      + "\n Or enter 0 to exit to the main menu");
 
                 string input = Console.ReadLine();
@@ -167,22 +166,24 @@ namespace SkalProj_Datastrukturer_Minne
                     case '+':
                         theQueue.Enqueue(value);
 
-                        Console.WriteLine($"Items in the list: ");
-                        foreach (var item in theQueue)
-                        {
-                            Console.WriteLine(item);
-                        }                       
-
-                        break;
-
-                    case '-':
-                        theQueue.Dequeue();
-                        Console.WriteLine($"Items in the list: ");
+                        Console.WriteLine($"Items in the queue: ");
                         foreach (var item in theQueue)
                         {
                             Console.WriteLine(item);
                         }
-                       
+
+                        break;
+
+                    case '-':
+                        if (theQueue.Count > 0)
+                            theQueue.Dequeue();
+
+                        Console.WriteLine($"Items in the queue: ");
+                        foreach (var item in theQueue)
+                        {
+                            Console.WriteLine(item);
+                        }
+
                         break;
 
                     case '0':
@@ -206,17 +207,66 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+
+            Stack<string> theStack = new Stack<string>();
+            bool isRunning = true;
+            while (isRunning)
+            {
+                Console.WriteLine(" Enter a string with a \"+\" in front, if you want to push (add item to the stack)."
+                     + "\n Enter a \"-\", it you want to pop (remove the first item from the stack)."
+                     + "\n Or enter 0 to exit to the main menu");
+
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+
+                switch (nav)
+                {
+                    case '+':
+                        theStack.Push(value);
+
+                        Console.WriteLine($"Items in the stack: ");
+                        foreach (var item in theStack)
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        break;
+
+                    case '-':
+                        if (theStack.Count > 0)
+                            theStack.Pop();
+
+                        Console.WriteLine($"Items in the stack: ");
+                        foreach (var item in theStack)
+                        {
+                            Console.WriteLine(item);
+                        }
+
+                        break;
+
+                    case '0':
+                        isRunning = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Please, only enter \"+\" or \"-\" in front of the string.");
+                        break;
+                }
+            }
         }
 
-        static void CheckParanthesis()
-        {
-            /*
-             * Use this method to check if the paranthesis in a string is Correct or incorrect.
-             * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
-             * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
-             */
+            static void CheckParanthesis()
+            {
+                /*
+                 * Use this method to check if the paranthesis in a string is Correct or incorrect.
+                 * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
+                 * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
+                 */
 
-        }
+            }
 
+        
     }
 }
