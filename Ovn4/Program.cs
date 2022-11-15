@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -30,6 +31,30 @@ namespace SkalProj_Datastrukturer_Minne
 
         static void Main()
         {
+            Console.WriteLine(ReverseText("Uppsala"));
+            static string ReverseText(string text)
+            {
+                char[] charArray=text.ToCharArray();
+                int length=charArray.Length;
+             
+                Stack<char> stack = new Stack<char>();
+
+                foreach (char letter in charArray)
+                {
+                    stack.Push(letter);
+                    //Console.WriteLine(letter);
+                }
+
+                for (int i = 0; i < length; i++)
+                {
+                    charArray[i] = stack.Pop();
+                }
+                
+                string reversedText = new string(charArray);
+                return reversedText;        
+            }
+
+
 
             while (true)
             {
@@ -254,6 +279,32 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.WriteLine("Please, only enter \"+\" or \"-\" in front of the string.");
                         break;
                 }
+            }
+            // Fråga 1. I det här fallet är det inte så smart att använda en stack, eftersom den som ställer sig 
+            //          först i kön är den som kommer lämna kön sist, enligt Först In Sist Ut principen. Kalle
+            //          kommer därför inte kunna lämna kön förrän de andra har gjort det. 
+            
+            
+            static string ReverseText(string text)
+            {
+                char[] charArray = text.ToCharArray();
+                int length = charArray.Length;
+
+                Stack<char> stack = new Stack<char>();
+
+                foreach (char letter in charArray)
+                {
+                    stack.Push(letter);
+                    //Console.WriteLine(letter);
+                }
+
+                for (int i = 0; i < length; i++)
+                {
+                    charArray[i] = stack.Pop();
+                }
+
+                string reversedText = new string(charArray);
+                return reversedText;
             }
         }
 
