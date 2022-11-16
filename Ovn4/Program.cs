@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -31,30 +32,8 @@ namespace SkalProj_Datastrukturer_Minne
 
         static void Main()
         {
-            Console.WriteLine(ReverseText("Uppsala"));
-            static string ReverseText(string text)
-            {
-                char[] charArray=text.ToCharArray();
-                int length=charArray.Length;
-             
-                Stack<char> stack = new Stack<char>();
 
-                foreach (char letter in charArray)
-                {
-                    stack.Push(letter);
-                    //Console.WriteLine(letter);
-                }
-
-                for (int i = 0; i < length; i++)
-                {
-                    charArray[i] = stack.Pop();
-                }
-                
-                string reversedText = new string(charArray);
-                return reversedText;        
-            }
-
-
+           
 
             while (true)
             {
@@ -86,7 +65,8 @@ namespace SkalProj_Datastrukturer_Minne
                         ExamineStack();
                         break;
                     case '4':
-                        CheckParanthesis();
+                        Console.WriteLine(CheckParanthesis());
+                       // CheckParanthesis();
                         break;
                     /*
                      * Extend the menu to include the recursive 
@@ -308,15 +288,48 @@ namespace SkalProj_Datastrukturer_Minne
             }
         }
 
-            static void CheckParanthesis()
-            {
-                /*
-                 * Use this method to check if the paranthesis in a string is Correct or incorrect.
-                 * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
-                 * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
-                 */
 
+          // Fråga 1. För den här metoden kan det vara lämpligt att använda datastrukturen stack. Då kan man frigöra 
+          //          de paranteser som hör ihop.
+        static string CheckParanthesis()
+            {
+            /*
+             * Use this method to check if the paranthesis in a string is Correct or incorrect.
+             * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
+             * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
+             */            
+
+            Console.WriteLine("Write a string with parenthesis");
+            string input = Console.ReadLine();
+            
+            Stack<char> stack = new Stack<char>(input.Length);
+                        
+                foreach (char c in input)
+                {
+                    if (c == '(' || c == '{' || c == '[' || c=='<')
+                        stack.Push(c);                                   // A "left parenthesis" is added to the stack
+                    else if (c == ')' || c == '}' || c == ']' || c=='>')
+                    {                   
+                    if (stack.Count == 0)
+                        return $"{input}: incorrect"; 
+
+                    char removed = stack.Pop();  // The last added left paranthesis in the stack is removed to see if it 
+                                                 // corresponds to the right paranthesis 
+                    if (c == ')' && removed != '(' || c == '}' && removed != '{' || c == ']' && removed != '[' 
+                        || c== '>' && removed !='<')
+
+                        return $"{input}: incorrect";
+                    }
+                }
+            
+            if (stack.Count > 0)                    
+                return $"{input}: incorrect";
+
+            return $"{input}: correct";            
             }
+
+
+            
 
         
     }
