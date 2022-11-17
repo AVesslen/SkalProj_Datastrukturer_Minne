@@ -7,9 +7,10 @@ namespace SkalProj_Datastrukturer_Minne
 {
     class Program
     {
-        
-        // Fråga 1. Stacken lagrar värdetyper. Rensar sig själv. "Sist in först ut"
-        // Heapen kan lagra variabler av både värdetyper och referenstyper. Behöver hjälp av Garbage Collection för att rensa.
+
+        // Fråga 1. Stacken lagrar värdetyper. Stacken har bra koll på vad som finns i den. Rensar sig själv när en metod har körts.
+        // Heapen kan lagra variabler av både värdetyper och referenstyper. När ett objekt inte längre har en referens
+        // som pekar på det, behöver Garbage Collection hjälpa till att rensa bort det. 
 
         // Fråga 2. En värdetyp är tex. bool, char, decimal, double, enum, float, int, long. Lagras där de deklareras.
         // En referenstyp är tex class, object, string, interface. En referenstyp håller inte värdet på objektet som det
@@ -19,14 +20,25 @@ namespace SkalProj_Datastrukturer_Minne
         // Sen deklareras y och sätts lika med x. Då skapas en kopia av x. När sedan y ändrar
         // sitt värde till 4, är det bara i kopian värdet ändras, så x är oförändrat. Int är en värdetyp.
         //
-        // I andra metoden är MyInt en klass och därför en referenstyp. Vi skapar ett objekt x i stacken, som pekar på det riktiga objektet
+        // I andra metoden är MyInt en klass och därför en referenstyp. Vi skapar ett objekt, med en "pekare" x i stacken, som pekar på det riktiga objektet
         // på heapen. Stacken innehåller alltså bara en referens till det lagrade värdet på heapen. När vi sedan skapar
         // ett nytt objekt y och sätter y=x, kommer y peka på x på heapen. När y får värdet 4, ändras värdet på heapen. Eftersom både 
         // x och y är referenstyper kommer de båda peka på samma objekt. Därför pekar även x på 4. 
 
 
         static void Main()
-        {  
+        {
+           
+            string textToReverse = "My name is Anna";
+            try
+            {
+                string reversedText = ReverseText(textToReverse);
+                Console.WriteLine($"{textToReverse}. After reversed: {reversedText}");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             while (true)
             {
@@ -76,9 +88,8 @@ namespace SkalProj_Datastrukturer_Minne
             }
         }
 
-        /// <summary>
-        /// Examines the datastructure List
-        /// </summary>
+       
+        // Examines the datastructure List      
         static void ExamineList()
         {
             List<string> theList = new List<string>();
@@ -89,7 +100,7 @@ namespace SkalProj_Datastrukturer_Minne
                      + "\n Enter a string with a \"-\" in front, it you want to remove the string from the list"
                      + "\n Or enter 0 to exit to the main menu";
 
-                string input = AskForString(message)!; // Calls the method AskForString to ensure that the input is not empty
+                string input = AskForString(message); // Calls the method AskForString to ensure that the input is not empty
                 char nav = input[0];
                 string value = input.Substring(1);   //Takes the characters from the second index of string and forward
 
@@ -98,8 +109,8 @@ namespace SkalProj_Datastrukturer_Minne
                 {
                     case '+':
                         theList.Add(value);
+                        
                         Console.WriteLine($"Items in the list: ");
-
                         foreach (var item in theList)
                         {
                             Console.WriteLine(item);
@@ -139,17 +150,10 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
 
-        /// <summary>
-        /// Examines the datastructure Queue
-        /// </summary>
+       
+        // Examines the datastructure Queue       
         static void ExamineQueue()
-        {
-            /*
-             * Loop this method untill the user inputs something to exit to main menue.
-             * Create a switch with cases to enqueue items or dequeue items
-             * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
-            */
-
+        {       
             Queue<string> theQueue = new Queue<string>();
             bool isRunning = true;
             while (isRunning)
@@ -158,7 +162,7 @@ namespace SkalProj_Datastrukturer_Minne
                      + "\n Enter a \"-\", if you want to enqueue (remove the first item from the queue)."
                      + "\n Or enter 0 to exit to the main menu";
 
-                string input = AskForString(message)!;
+                string input = AskForString(message);
                 char nav = input[0];
                 string value = input.Substring(1);
 
@@ -198,27 +202,19 @@ namespace SkalProj_Datastrukturer_Minne
             }
         }
 
-        /// <summary>
-        /// Examines the datastructure Stack
-        /// </summary>
+
+        // Examines the datastructure Stack      
         static void ExamineStack()
         {
-            /*
-             * Loop this method until the user inputs something to exit to main menue.
-             * Create a switch with cases to push or pop items
-             * Make sure to look at the stack after pushing and and poping to see how it behaves
-            */
-
-
             Stack<string> theStack = new Stack<string>();
             bool isRunning = true;
             while (isRunning)
             {
-                string message=" Enter a string with a \"+\" in front, if you want to push (add item to the stack)."
+                string message = " Enter a string with a \"+\" in front, if you want to push (add item to the stack)."
                      + "\n Enter a \"-\", if you want to pop (remove the last item from the stack)."
                      + "\n Or enter 0 to exit to the main menu";
 
-                string input = AskForString(message)!;
+                string input = AskForString(message);
                 char nav = input[0];
                 string value = input.Substring(1);
 
@@ -260,15 +256,15 @@ namespace SkalProj_Datastrukturer_Minne
             //          först i kön är den som kommer lämna kön sist, enligt Först In Sist Ut principen. Kalle
             //          kommer därför inte kunna lämna kön förrän de andra har gjort det. 
 
-
-            static string ReverseText(string text)
+        }
+            static string ReverseText(string text)   // Returns a reversed text by using the Stack type
             {
-                if (string.IsNullOrWhiteSpace(text))
-                {
-                    throw new ArgumentException($"'{nameof(text)}' cannot be null or whitespace.", nameof(text));
-                }
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                throw new ArgumentException($"'{nameof(text)}' cannot be null or whitespace.");
+            }
 
-                char[] charArray = text.ToCharArray();
+            char[] charArray = text.ToCharArray();
                 int length = charArray.Length;
 
                 Stack<char> stack = new Stack<char>();
@@ -286,19 +282,15 @@ namespace SkalProj_Datastrukturer_Minne
                 string reversedText = new string(charArray);
                 return reversedText;
             }
-        }
+
 
 
         // Fråga 1. För den här metoden kan det vara lämpligt att använda datastrukturen stack. Då kan man lätt frigöra 
         //          de paranteser som hör ihop, för att sedan komma åt och frigöra nästa.
-        static string CheckParanthesis()
-        {
-            /*
-             * Use this method to check if the paranthesis in a string is Correct or incorrect.
-             * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
-             * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
-             */
 
+        // Checks if the parenthesis in a string are Correct or incorrect.
+        static string CheckParanthesis()
+        {          
                
             string message = "Write a string with parenthesis";
             string input = AskForString(message);
@@ -330,7 +322,9 @@ namespace SkalProj_Datastrukturer_Minne
             return $"{input}: correct";
         }
 
-        public static string AskForString(string message)
+
+
+        public static string AskForString(string message)  // Checks if a string is null or empty and returns a valid string
         {
             string answer;
             bool success = false;
