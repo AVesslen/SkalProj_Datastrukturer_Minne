@@ -7,12 +7,7 @@ namespace SkalProj_Datastrukturer_Minne
 {
     class Program
     {
-        /// <summary>
-        /// The main method, vill handle the menues for the program
-        /// </summary>
-        /// <param name="args"></param>
-        /// 
-
+        
         // Fråga 1. Stacken lagrar värdetyper. Rensar sig själv. "Sist in först ut"
         // Heapen kan lagra variabler av både värdetyper och referenstyper. Behöver hjälp av Garbage Collection för att rensa.
 
@@ -31,9 +26,7 @@ namespace SkalProj_Datastrukturer_Minne
 
 
         static void Main()
-        {
-
-           
+        {  
 
             while (true)
             {
@@ -43,6 +36,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
                     + "\n0. Exit the application");
+
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
                 {
@@ -64,14 +58,14 @@ namespace SkalProj_Datastrukturer_Minne
                     case '3':
                         ExamineStack();
                         break;
-                    case '4':
-                        Console.WriteLine(CheckParanthesis());
-                       // CheckParanthesis();
+                    case '4':                       
+                        Console.WriteLine(CheckParanthesis());                       
                         break;
                     /*
                      * Extend the menu to include the recursive 
                      * and iterative exercises.
                      */
+
                     case '0':
                         Environment.Exit(0);
                         break;
@@ -91,20 +85,21 @@ namespace SkalProj_Datastrukturer_Minne
             bool isRunning = true;
             while (isRunning)
             {
-                Console.WriteLine(" Enter a string with a \"+\" in front, if you want to add the string."
-                     + "\n Enter a string with a \"-\" in front, it you want to remove the string"
-                     + "\n Or enter 0 to exit to the main menu");
+               string message=" Enter a string with a \"+\" in front, if you want to add the string to the list."
+                     + "\n Enter a string with a \"-\" in front, it you want to remove the string from the list"
+                     + "\n Or enter 0 to exit to the main menu";
 
-                string input = Console.ReadLine();
+                string input = AskForString(message)!; // Calls the method AskForString to ensure that the input is not empty
                 char nav = input[0];
-                string value = input.Substring(1);
+                string value = input.Substring(1);   //Takes the characters from the second index of string and forward
+
 
                 switch (nav)
                 {
                     case '+':
                         theList.Add(value);
-
                         Console.WriteLine($"Items in the list: ");
+
                         foreach (var item in theList)
                         {
                             Console.WriteLine(item);
@@ -112,6 +107,7 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}");
 
                         break;
+
                     case '-':
                         theList.Remove(value);
                         Console.WriteLine($"Items in the list: ");
@@ -158,11 +154,11 @@ namespace SkalProj_Datastrukturer_Minne
             bool isRunning = true;
             while (isRunning)
             {
-                Console.WriteLine(" Enter a string with a \"+\" in front, if you want to enqueue (add item to the queue)."
-                     + "\n Enter a \"-\", it you want to enqueue (remove the first item from the queue)."
-                     + "\n Or enter 0 to exit to the main menu");
+                string message=" Enter a string with a \"+\" in front, if you want to enqueue (add item to the queue)."
+                     + "\n Enter a \"-\", if you want to enqueue (remove the first item from the queue)."
+                     + "\n Or enter 0 to exit to the main menu";
 
-                string input = Console.ReadLine();
+                string input = AskForString(message)!;
                 char nav = input[0];
                 string value = input.Substring(1);
 
@@ -218,11 +214,11 @@ namespace SkalProj_Datastrukturer_Minne
             bool isRunning = true;
             while (isRunning)
             {
-                Console.WriteLine(" Enter a string with a \"+\" in front, if you want to push (add item to the stack)."
-                     + "\n Enter a \"-\", it you want to pop (remove the first item from the stack)."
-                     + "\n Or enter 0 to exit to the main menu");
+                string message=" Enter a string with a \"+\" in front, if you want to push (add item to the stack)."
+                     + "\n Enter a \"-\", if you want to pop (remove the last item from the stack)."
+                     + "\n Or enter 0 to exit to the main menu";
 
-                string input = Console.ReadLine();
+                string input = AskForString(message)!;
                 char nav = input[0];
                 string value = input.Substring(1);
 
@@ -263,10 +259,15 @@ namespace SkalProj_Datastrukturer_Minne
             // Fråga 1. I det här fallet är det inte så smart att använda en stack, eftersom den som ställer sig 
             //          först i kön är den som kommer lämna kön sist, enligt Först In Sist Ut principen. Kalle
             //          kommer därför inte kunna lämna kön förrän de andra har gjort det. 
-            
-            
+
+
             static string ReverseText(string text)
             {
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    throw new ArgumentException($"'{nameof(text)}' cannot be null or whitespace.", nameof(text));
+                }
+
                 char[] charArray = text.ToCharArray();
                 int length = charArray.Length;
 
@@ -275,7 +276,6 @@ namespace SkalProj_Datastrukturer_Minne
                 foreach (char letter in charArray)
                 {
                     stack.Push(letter);
-                    //Console.WriteLine(letter);
                 }
 
                 for (int i = 0; i < length; i++)
@@ -289,48 +289,72 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
 
-          // Fråga 1. För den här metoden kan det vara lämpligt att använda datastrukturen stack. Då kan man frigöra 
-          //          de paranteser som hör ihop.
+        // Fråga 1. För den här metoden kan det vara lämpligt att använda datastrukturen stack. Då kan man lätt frigöra 
+        //          de paranteser som hör ihop, för att sedan komma åt och frigöra nästa.
         static string CheckParanthesis()
-            {
+        {
             /*
              * Use this method to check if the paranthesis in a string is Correct or incorrect.
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
-             */            
+             */
 
-            Console.WriteLine("Write a string with parenthesis");
-            string input = Console.ReadLine();
-            
+               
+            string message = "Write a string with parenthesis";
+            string input = AskForString(message);
+
+
             Stack<char> stack = new Stack<char>(input.Length);
-                        
-                foreach (char c in input)
+
+            foreach (char c in input)
+            {
+                if (c == '(' || c == '{' || c == '[' || c == '<')
+                    stack.Push(c);                                   // A "left parenthesis" is added to the stack
+                else if (c == ')' || c == '}' || c == ']' || c == '>')
                 {
-                    if (c == '(' || c == '{' || c == '[' || c=='<')
-                        stack.Push(c);                                   // A "left parenthesis" is added to the stack
-                    else if (c == ')' || c == '}' || c == ']' || c=='>')
-                    {                   
                     if (stack.Count == 0)
-                        return $"{input}: incorrect"; 
+                        return $"{input}: incorrect";
 
                     char removed = stack.Pop();  // The last added left paranthesis in the stack is removed to see if it 
                                                  // corresponds to the right paranthesis 
-                    if (c == ')' && removed != '(' || c == '}' && removed != '{' || c == ']' && removed != '[' 
-                        || c== '>' && removed !='<')
+                    if (c == ')' && removed != '(' || c == '}' && removed != '{' || c == ']' && removed != '['
+                        || c == '>' && removed != '<')
 
                         return $"{input}: incorrect";
-                    }
                 }
-            
-            if (stack.Count > 0)                    
-                return $"{input}: incorrect";
-
-            return $"{input}: correct";            
             }
 
+            if (stack.Count > 0)
+                return $"{input}: incorrect";
 
-            
+            return $"{input}: correct";
+        }
 
-        
+        public static string AskForString(string message)
+        {
+            string answer;
+            bool success = false;
+
+            do
+            {
+                Console.WriteLine(message); 
+                answer =Console.ReadLine();
+
+                if (string.IsNullOrEmpty(answer))
+                {
+                    Console.WriteLine($"You must enter a valid string");
+                }
+                else
+                {
+                    success = true;
+                }
+
+            } while (!success);
+
+            return answer;
+        }
+
+
+
     }
 }
