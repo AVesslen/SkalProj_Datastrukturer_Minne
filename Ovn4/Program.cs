@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -39,6 +43,7 @@ namespace SkalProj_Datastrukturer_Minne
             {
                 Console.WriteLine(ex.Message);
             }
+
 
             while (true)
             {
@@ -108,24 +113,14 @@ namespace SkalProj_Datastrukturer_Minne
                 switch (nav)
                 {
                     case '+':
-                        theList.Add(value);
-                        
-                        Console.WriteLine($"Items in the list: ");
-                        foreach (var item in theList)
-                        {
-                            Console.WriteLine(item);
-                        }
-                        Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}");
-
-                        break;
+                        theList.Add(value);                       
+                        PrintItemsInList(theList);
+                        Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}"); //Capacity is the number of elements that the List<T> can store before resizing is required
+                        break;                                                                       //Count is the number of elements contained in List<T>                                                                                            
 
                     case '-':
                         theList.Remove(value);
-                        Console.WriteLine($"Items in the list: ");
-                        foreach (var item in theList)
-                        {
-                            Console.WriteLine(item);
-                        }
+                        PrintItemsInList(theList);
                         Console.WriteLine($"Capacity: {theList.Capacity},  Count: {theList.Count}");
                         break;
 
@@ -139,16 +134,24 @@ namespace SkalProj_Datastrukturer_Minne
                 }
             }
 
-            // Fråga 2. Listans kapacitet ökar först när den underliggande arrayen är full (count=capacity) och vi vill lägga till ett nytt element.
-            // Fråga 3. Default kapacitet när första elementet läggs till är 4. Kapaciteten ökar sedan exponentiellt, genom att dubbleras när den
-            //          underliggande arrayen är full (4,8,16,32,64... osv.)
-            // Fråga 4. Listans kapacitet ökar inte i samma takt som element läggs till pga att den lagrar värdena i en array. En array har en fix storlek,
-            //          så att lägga till nya element är kostsamt. Det kräver att en ny, längre array skapas och de tidigare elementen kopieras över till
-            //          den nya. 
-            // Fråga 5. Kapaciteten minskar inte när element tas bort ur listan.
-            // Fråga 6. När man vet på förhand hur många element man vill lägga till är det fördelaktigt att använda en egendefinierad array i stället för lista. 
+            // Fråga 1.2. Listans kapacitet ökar först när den underliggande arrayen är full (count=capacity) och vi vill lägga till ett nytt element.
+            // Fråga 1.3. Default kapacitet när första elementet läggs till är 4. Kapaciteten ökar sedan exponentiellt, genom att dubbleras när den
+            //            underliggande arrayen är full (4,8,16,32,64... osv.)
+            // Fråga 1.4. Listans kapacitet ökar inte i samma takt som element läggs till pga att den lagrar värdena i en array. En array har en fix storlek,
+            //            så att lägga till nya element är kostsamt. Det kräver att en ny, längre array skapas och de tidigare elementen kopieras över till
+            //            den nya. 
+            // Fråga 1.5. Kapaciteten minskar inte när element tas bort ur listan.
+            // Fråga 1.6. När man vet på förhand hur många element man vill lägga till är det fördelaktigt att använda en egendefinierad array i stället för lista. 
         }
 
+        static void PrintItemsInList(List<string> list)
+        {
+            Console.WriteLine($"Items in the list: ");
+            foreach (var item in list)
+            {
+                Console.WriteLine(item);
+            }
+        }
 
        
         // Examines the datastructure Queue       
@@ -170,25 +173,14 @@ namespace SkalProj_Datastrukturer_Minne
                 {
                     case '+':
                         theQueue.Enqueue(value);
-
-                        Console.WriteLine($"Items in the queue: ");
-                        foreach (var item in theQueue)
-                        {
-                            Console.WriteLine(item);
-                        }
-
+                        PrintItemsInQueue(theQueue); 
                         break;
 
                     case '-':
                         if (theQueue.Count > 0)
                             theQueue.Dequeue();
 
-                        Console.WriteLine($"Items in the queue: ");
-                        foreach (var item in theQueue)
-                        {
-                            Console.WriteLine(item);
-                        }
-
+                        PrintItemsInQueue(theQueue);
                         break;
 
                     case '0':
@@ -199,6 +191,15 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.WriteLine("Please, only enter \"+\" or \"-\" in front of the string.");
                         break;
                 }
+            }
+        }
+
+        private static void PrintItemsInQueue(Queue<string> queue)
+        {
+            Console.WriteLine($"Items in the queue: ");
+            foreach (var item in queue)
+            {
+                Console.WriteLine(item);
             }
         }
 
@@ -222,25 +223,13 @@ namespace SkalProj_Datastrukturer_Minne
                 {
                     case '+':
                         theStack.Push(value);
-
-                        Console.WriteLine($"Items in the stack: ");
-                        foreach (var item in theStack)
-                        {
-                            Console.WriteLine(item);
-                        }
-
+                        PrintItemsInStack(theStack);
                         break;
 
                     case '-':
                         if (theStack.Count > 0)
                             theStack.Pop();
-
-                        Console.WriteLine($"Items in the stack: ");
-                        foreach (var item in theStack)
-                        {
-                            Console.WriteLine(item);
-                        }
-
+                        PrintItemsInStack(theStack);
                         break;
 
                     case '0':
@@ -252,19 +241,29 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                 }
             }
-            // Fråga 1. I det här fallet är det inte så smart att använda en stack, eftersom den som ställer sig 
+        }
+            // Fråga 3.1. I det här fallet med ICA-kön är det inte så smart att använda en stack, eftersom den som ställer sig 
             //          först i kön är den som kommer lämna kön sist, enligt Först In Sist Ut principen. Kalle
             //          kommer därför inte kunna lämna kön förrän de andra har gjort det. 
 
+        
+        private static void PrintItemsInStack(Stack<string> stack)
+        {
+            Console.WriteLine($"Items in the stack: ");
+            foreach (var item in stack)
+            {
+                Console.WriteLine(item);
+            }
         }
-            static string ReverseText(string text)   // Returns a reversed text by using the Stack type
+
+        static string ReverseText(string text)   // Returns a reversed text by using the Stack type
             {
             if (string.IsNullOrWhiteSpace(text))
             {
                 throw new ArgumentException($"'{nameof(text)}' cannot be null or whitespace.");
             }
 
-            char[] charArray = text.ToCharArray();
+            char[] charArray = text.ToCharArray();   //Devides the string into characters and puts them in an array
                 int length = charArray.Length;
 
                 Stack<char> stack = new Stack<char>();
@@ -285,8 +284,8 @@ namespace SkalProj_Datastrukturer_Minne
 
 
 
-        // Fråga 1. För den här metoden kan det vara lämpligt att använda datastrukturen stack. Då kan man lätt frigöra 
-        //          de paranteser som hör ihop, för att sedan komma åt och frigöra nästa.
+        // Fråga 4.1. För den här metoden kan det vara lämpligt att använda datastrukturen stack. Då kan man lätt frigöra 
+        //            de paranteser som hör ihop, för att sedan komma åt och frigöra nästa.
 
         // Checks if the parenthesis in a string are Correct or incorrect.
         static string CheckParanthesis()
@@ -324,7 +323,7 @@ namespace SkalProj_Datastrukturer_Minne
 
 
 
-        public static string AskForString(string message)  // Checks if a string is null or empty and returns a valid string
+        static string AskForString(string message)  // Checks if a string is null or empty and returns a valid string
         {
             string answer;
             bool success = false;
@@ -345,8 +344,12 @@ namespace SkalProj_Datastrukturer_Minne
 
             } while (!success);
 
-            return answer;
+            return answer!;
         }
+
+
+
+
 
 
 
