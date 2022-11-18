@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using Ovn4;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,7 +54,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
                     + "\n0. Exit the application");
-
+                int n;                
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
                 {
@@ -78,10 +79,20 @@ namespace SkalProj_Datastrukturer_Minne
                     case '4':                       
                         Console.WriteLine(CheckParanthesis());                       
                         break;
-                    /*
-                     * Extend the menu to include the recursive 
-                     * and iterative exercises.
-                     */
+                    case '5':
+                        n = RequestData.AskForInt("Enter the number n: ");            //RecursiveEven
+                        Console.WriteLine($"The {n}:th even number is {NumberSequences.RecursiveEven(n)}");
+                        break;
+                    case '6':                        
+                        n = RequestData.AskForInt("Enter the number n: ");            //RecursiveFibonacci
+                        Console.WriteLine($"The {n}:th number is: {NumberSequences.RecursiveFibonacci(n)}");
+                        break;
+                    case '7':
+                        NumberSequences.IterativeEven();                              //IterativeEven
+                        break;
+                    case '8':
+                       NumberSequences.IterativeFibonacci();                          //IterativeFibonacci
+                        break;
 
                     case '0':
                         Environment.Exit(0);
@@ -105,7 +116,7 @@ namespace SkalProj_Datastrukturer_Minne
                      + "\n Enter a string with a \"-\" in front, it you want to remove the string from the list"
                      + "\n Or enter 0 to exit to the main menu";
 
-                string input = AskForString(message); // Calls the method AskForString to ensure that the input is not empty
+                string input = RequestData.AskForString(message); // Calls the method AskForString to ensure that the input is not empty
                 char nav = input[0];
                 string value = input.Substring(1);   //Takes the characters from the second index of string and forward
 
@@ -165,7 +176,7 @@ namespace SkalProj_Datastrukturer_Minne
                      + "\n Enter a \"-\", if you want to enqueue (remove the first item from the queue)."
                      + "\n Or enter 0 to exit to the main menu";
 
-                string input = AskForString(message);
+                string input = RequestData.AskForString(message);
                 char nav = input[0];
                 string value = input.Substring(1);
 
@@ -215,7 +226,7 @@ namespace SkalProj_Datastrukturer_Minne
                      + "\n Enter a \"-\", if you want to pop (remove the last item from the stack)."
                      + "\n Or enter 0 to exit to the main menu";
 
-                string input = AskForString(message);
+                string input = RequestData.AskForString(message);
                 char nav = input[0];
                 string value = input.Substring(1);
 
@@ -292,7 +303,7 @@ namespace SkalProj_Datastrukturer_Minne
         {          
                
             string message = "Write a string with parenthesis";
-            string input = AskForString(message);
+            string input = RequestData.AskForString(message);
 
 
             Stack<char> stack = new Stack<char>(input.Length);
@@ -323,30 +334,7 @@ namespace SkalProj_Datastrukturer_Minne
 
 
 
-        static string AskForString(string message)  // Checks if a string is null or empty and returns a valid string
-        {
-            string answer;
-            bool success = false;
-
-            do
-            {
-                Console.WriteLine(message); 
-                answer =Console.ReadLine();
-
-                if (string.IsNullOrEmpty(answer))
-                {
-                    Console.WriteLine($"You must enter a valid string");
-                }
-                else
-                {
-                    success = true;
-                }
-
-            } while (!success);
-
-            return answer!;
-        }
-
+ 
 
 
 
