@@ -53,6 +53,10 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
+                    + "\n5. RecursiveEven"
+                    + "\n6. RecursiveFibonacci"
+                    + "\n7. IterativeEven"
+                    + "\n8. IterativeFibonacci"
                     + "\n0. Exit the application");
                 int n;                
                 char input = ' '; //Creates the character input to be used with the switch-case below.
