@@ -34,21 +34,22 @@ namespace SkalProj_Datastrukturer_Minne
         static void Main()
         {
            
-            string textToReverse = "My name is Anna";
-            try
-            {
-                string reversedText = ReverseText(textToReverse);
-                Console.WriteLine($"{textToReverse}. After reversed: {reversedText}");
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            //string textToReverse = "My name is Anna";                                       ////Testing the ReverseText method
+            //try
+            //{
+            //    string reversedText = ReverseText(textToReverse);
+            //    Console.WriteLine($"{textToReverse}. After reversed: {reversedText}");
+            //}
+            //catch(Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
 
 
             while (true)
             {
-                Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 0) of your choice"
+                Console.WriteLine();
+                Console.WriteLine("Please navigate through the menu by inputting the number of your choice"
                     + "\n1. Examine a List"
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
@@ -57,7 +58,8 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n6. RecursiveFibonacci"
                     + "\n7. IterativeEven"
                     + "\n8. IterativeFibonacci"
-                    + "\n0. Exit the application");
+                    + "\n0. Exit the application"
+                    + "\n");
                 int n;                
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -81,28 +83,29 @@ namespace SkalProj_Datastrukturer_Minne
                         ExamineStack();
                         break;
                     case '4':                       
-                        Console.WriteLine(CheckParanthesis());                       
+                        Console.WriteLine(CheckParenthesis());                       
                         break;
                     case '5':
-                        n = RequestData.AskForInt("Enter the number n: ");            //RecursiveEven
-                        Console.WriteLine($"The {n}:th even number is {NumberSequences.RecursiveEven(n)}");
+                        n = RequestData.AskForInt("Enter the number n: ");            
+                        Console.WriteLine($"The {n}:th even number is {NumberSequences.RecursiveEven(n)}");    //RecursiveEven
                         break;
                     case '6':                        
-                        n = RequestData.AskForInt("Enter the number n: ");            //RecursiveFibonacci
-                        Console.WriteLine($"The {n}:th number is: {NumberSequences.RecursiveFibonacci(n)}");
+                        n = RequestData.AskForInt("Enter the number n: ");           
+                        Console.WriteLine($"The {n}:th number in Fibonacci sequence is: {NumberSequences.RecursiveFibonacci(n)}");   //RecursiveFibonacci
                         break;
                     case '7':
-                        NumberSequences.IterativeEven();                              //IterativeEven
+                        n = RequestData.AskForInt("Enter the number n: ");
+                        Console.WriteLine($"The {n}:th even number is {NumberSequences.IterativeEven(n)}");    //IterativeEven
                         break;
                     case '8':
-                       NumberSequences.IterativeFibonacci();                          //IterativeFibonacci
+                        n = RequestData.AskForInt("Enter the number n: ");
+                        Console.WriteLine($"The {n}:th number in Fibonacci sequence is: {NumberSequences.IterativeFibonacci(n)}");   //IterativeFibonacci
                         break;
-
                     case '0':
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4)");
+                        Console.WriteLine("Please enter some valid input (0, 1, 2, 3, 4, 5, 6, 7, 8)");
                         break;
                 }
             }
@@ -302,8 +305,8 @@ namespace SkalProj_Datastrukturer_Minne
         // Fråga 4.1. För den här metoden kan det vara lämpligt att använda datastrukturen stack. Då kan man lätt frigöra 
         //            de paranteser som hör ihop, för att sedan komma åt och frigöra nästa.
 
-        // Checks if the parenthesis in a string are Correct or incorrect.
-        static string CheckParanthesis()
+        // Checks if the parenthesis in a string are Correct or Incorrect.
+        static string CheckParenthesis()
         {          
                
             string message = "Write a string with parenthesis";
@@ -322,7 +325,7 @@ namespace SkalProj_Datastrukturer_Minne
                         return $"{input}: incorrect";
 
                     char removed = stack.Pop();  // The last added left paranthesis in the stack is removed to see if it 
-                                                 // corresponds to the right paranthesis 
+                                                 // corresponds to the right paranthesis. If stack is empty, there are to many right parenthesis 
                     if (c == ')' && removed != '(' || c == '}' && removed != '{' || c == ']' && removed != '['
                         || c == '>' && removed != '<')
 
@@ -330,7 +333,7 @@ namespace SkalProj_Datastrukturer_Minne
                 }
             }
 
-            if (stack.Count > 0)
+            if (stack.Count > 0)  // If correct, the stack should be empty in the end
                 return $"{input}: incorrect";
 
             return $"{input}: correct";
