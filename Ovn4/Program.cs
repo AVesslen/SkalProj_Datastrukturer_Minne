@@ -275,7 +275,7 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
         static string ReverseText(string text)   // Returns a reversed text by using the Stack type
-            {
+        {
             if (string.IsNullOrWhiteSpace(text))
             {
                 throw new ArgumentException($"'{nameof(text)}' cannot be null or whitespace.");
@@ -293,22 +293,21 @@ namespace SkalProj_Datastrukturer_Minne
 
                 for (int i = 0; i < length; i++)
                 {
-                    charArray[i] = stack.Pop();
+                    charArray[i] = stack.Pop();   
                 }
 
                 string reversedText = new string(charArray);
                 return reversedText;
-            }
+        }
 
 
 
-        // Fråga 4.1. För den här metoden kan det vara lämpligt att använda datastrukturen stack. Då kan man lätt frigöra 
+        // Fråga 4.1. För metoden CheckParenthesis kan det vara lämpligt att använda datastrukturen stack. Då kan man lätt frigöra 
         //            de paranteser som hör ihop, för att sedan komma åt och frigöra nästa.
 
         // Checks if the parenthesis in a string are Correct or Incorrect.
         static string CheckParenthesis()
-        {          
-               
+        {                         
             string message = "Write a string with parenthesis";
             string input = RequestData.AskForString(message);
 
@@ -338,14 +337,6 @@ namespace SkalProj_Datastrukturer_Minne
 
             return $"{input}: correct";
         }
-
-
-
- 
-
-
-
-
 
 
     }

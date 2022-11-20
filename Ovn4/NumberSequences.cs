@@ -11,8 +11,8 @@ namespace Ovn4
 
         // Fråga 6.3. En iterativ funktion verkar mer minnesvänlig.
         //            En rekursiv funktion ger ofta en elegantare kod, men kräver mer minne i stacken.
-        //            Minne i stacken frigörs inte förrän metoden har returnerat. Om man anropar en metod, i metoden,
-        //            läggs info på i stacken varje gång metoden anropas. Så "gamla" värden sparas för att komma ihåg dem.
+        //            Om man anropar en metod, i metoden, läggs info på i stacken varje gång metoden anropas. Så "gamla" värden sparas
+        //            för att komma ihåg dem. Minne i stacken frigörs inte förrän metoden har returnerat.
         //            Om mer minne i stacken försöker användas än vad som finns tillgängligt orsakar det s.k. stack overflow. 
 
 
@@ -28,8 +28,7 @@ namespace Ovn4
             {
                 return 2;
             }
-            return (RecursiveEven(n - 1) + 2);
-            Console.WriteLine("hej");
+            return (RecursiveEven(n - 1) + 2);           
         }
 
 
